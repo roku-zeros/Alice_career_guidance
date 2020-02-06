@@ -4,11 +4,12 @@ import Levenshtein as lv
 import pymorphy2
 
 
-app = Flask(__name__)
-
 session = {}  # информация о пользователях
 
 morph = pymorphy2.MorphAnalyzer()
+
+app = Flask(__name__)
+
 
 @app.route('/post', methods=['POST'])
 def main():
@@ -47,13 +48,20 @@ def start(res, user):  # ask what user want
 
 def making_choice(req, res, user):
     choices = ['профиль', 'универститет', 'профессия']
-    max_similarity = [-1, -1]
-    for choice in choices:
-        pass
+    max_similarity = [-1, '']  # similarity and word
+    text = clean_sentence(req, 'noun')
+    for i in range(len(choices)):
+        for word in text:
+            similarity = lv.ratio(choices[i], word)
+            if similarity > max_similarity[0]:
+                max_similarity = [similarity, word]
+    print(max_similarity[1])
 
 
-def clean_sentence(text, part_of_speech):
-    pass
+def clean_sentence(text, part_of_speech):  # clean sentence from unnecessary words
+    part_of_speech = part_of_speech.upper()
+    return [word for word in text.split()
+         if part_of_speech in word.morph.parse(word)[0].tag]
 
 
 def repeat():
