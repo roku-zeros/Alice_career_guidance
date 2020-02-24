@@ -2,6 +2,8 @@ from flask import Flask, request
 import json
 import Levenshtein as lv
 import pymorphy2
+from extra import *
+from career_guidance_test import *
 
 
 session = {}  # информация о пользователях
@@ -9,6 +11,9 @@ session = {}  # информация о пользователях
 morph = pymorphy2.MorphAnalyzer()
 
 app = Flask(__name__)
+
+
+MAKING_CHOICE, CAREER, PROFESSION, UNIVERSITY = "making choice", "профиль", "профессия", "вуз"
 
 
 @app.route('/post', methods=['POST'])
@@ -33,11 +38,11 @@ def main():
             repeat(response)
     elif session[user_id] == 'making choice':
         making_choice(text.lower(), response, user_id)
-    elif session[user_id] == 'профиль':
+    elif session[user_id] == CAREER:
+        career_guidance_test(request, response, user_id)
+    elif session[user_id] == UNIVERSITY:
         pass
-    elif session[user_id] == 'универститет' or session[user_id] == 'вуз':
-        pass
-    elif session[user_id] == 'профессия':
+    elif session[user_id] == PROFESSION:
         pass
     return json.dumps(response)
 
@@ -49,37 +54,27 @@ def greeting(res, user):  # greeting and adding to the session
 
 
 def start(res, user):  # ask what user want
-    session[user] = 'making choice'
+    session[user] = MAKING_CHOICE
     res['response']['text'] = "Я могу помочь с выбором профиля, университета или " \
                               "же профессии, если ты выбрал профиль. Что тебя интересует?"
 
 
 def making_choice(req, res, user):
     choices = ['профиль', 'универститет', 'вуз', 'профессия']
-    max_similarity = [-1.0, '']  # similarity and word
+    choices_const = [CAREER, UNIVERSITY, UNIVERSITY, PROFESSION]
+    max_similarity = [-1.0, '', '']  # similarity and word
     text = clean_sentence(req, 'noun')
     for i in range(len(choices)):
         for word in text:
             similarity = lv.ratio(choices[i], word)
             if similarity > max_similarity[0]:
-                max_similarity = [similarity, choices[i]]
+                max_similarity = [similarity, choices[i], choices_const[i]]
     print(max_similarity)
     if max_similarity[0] > 0.35:
-        session[user] = max_similarity[1]
+        session[user] = max_similarity[2]
+        career_guidance_test(req, res, user)
     else:
         repeat(res)
-
-
-def clean_sentence(text, part_of_speech):  # clean sentence from unnecessary words
-    part_of_speech = part_of_speech.upper()
-    return [word for word in text.split()
-         if part_of_speech in morph.parse(word)[0].tag
-            or 'UNKN' in morph.parse(word)[0].tag]
-
-
-def repeat(res):
-    res['response']['text'] = "Извините, я вас не понял"
-    return res
 
 
 if __name__ == '__main__':
