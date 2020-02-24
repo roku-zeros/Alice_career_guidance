@@ -1,8 +1,5 @@
 from flask import Flask, request
 import json
-import Levenshtein as lv
-import pymorphy2
-from extra import *
 from career_guidance_test import *
 from choice_of_university import *
 

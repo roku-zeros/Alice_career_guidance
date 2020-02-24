@@ -1,8 +1,4 @@
-from flask import Flask, request
 from extra import *
-import json
-import Levenshtein as lv
-from pony.orm import *
 from SQmodel import *
 
 
