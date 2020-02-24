@@ -4,7 +4,7 @@ import pymorphy2
 morph = pymorphy2.MorphAnalyzer()
 
 
-MAKING_CHOICE, CAREER, PROFESSION, UNIVERSITY = "making choice", "профиль", "профессия", "вуз"
+MAKING_CHOICE, CAREER, PROFESSION, UNIVERSITY, IN_BRENCH = "making choice", "профиль", "профессия", "вуз", "занят"
 
 
 def clean_sentence(text, part_of_speech):  # clean sentence from unnecessary words
@@ -17,5 +17,3 @@ def clean_sentence(text, part_of_speech):  # clean sentence from unnecessary wor
 def repeat(res):
     res['response']['text'] = "Извините, я вас не понял"
     return res
-
-print(morph.parse('превый')[0].tag)

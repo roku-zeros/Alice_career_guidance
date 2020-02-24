@@ -4,6 +4,7 @@ import Levenshtein as lv
 import pymorphy2
 from extra import *
 from career_guidance_test import *
+from choice_of_university import *
 
 
 session = {}  # информация о пользователях
@@ -11,9 +12,6 @@ session = {}  # информация о пользователях
 morph = pymorphy2.MorphAnalyzer()
 
 app = Flask(__name__)
-
-
-MAKING_CHOICE, CAREER, PROFESSION, UNIVERSITY = "making choice", "профиль", "профессия", "вуз"
 
 
 @app.route('/post', methods=['POST'])
@@ -36,12 +34,12 @@ def main():
             response['response']['text'] = 'Пока'
         else:
             repeat(response)
-    elif session[user_id] == 'making choice':
+    elif session[user_id] == MAKING_CHOICE:
         making_choice(text.lower(), response, user_id)
     elif session[user_id] == CAREER:
         career_guidance_test(request, response, user_id)
     elif session[user_id] == UNIVERSITY:
-        pass
+        choice_of_university(request, response, user_id)
     elif session[user_id] == PROFESSION:
         pass
     return json.dumps(response)
@@ -72,7 +70,14 @@ def making_choice(req, res, user):
     print(max_similarity)
     if max_similarity[0] > 0.35:
         session[user] = max_similarity[2]
-        career_guidance_test(req, res, user)
+
+        if session[user] == CAREER:
+            career_guidance_test(request, res, user)
+        elif session[user] == UNIVERSITY:
+            choice_of_university(request, res, user)
+        elif session[user] == PROFESSION:
+            pass
+
     else:
         repeat(res)
 

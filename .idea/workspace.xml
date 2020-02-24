@@ -2,11 +2,16 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="28bc2c50-1e09-4c87-80f5-15dee9f964f8" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/career_guidance_test.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/extra.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Professions.db" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SQmodel.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/choice_of_university.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/test3.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/career_guidance_test.py" beforeDir="false" afterPath="$PROJECT_DIR$/career_guidance_test.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/extra.py" beforeDir="false" afterPath="$PROJECT_DIR$/extra.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/test1.py" beforeDir="false" afterPath="$PROJECT_DIR$/test1.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test2.py" beforeDir="false" afterPath="$PROJECT_DIR$/test2.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -34,9 +39,10 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
-  <component name="RunManager" selected="Python.test1">
+  <component name="RunManager" selected="Python.main">
     <configuration name="career_guidance_test" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="Alice_career_guidance" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -58,7 +64,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="extra" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+    <configuration name="choice_of_university" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="Alice_career_guidance" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -70,7 +76,7 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/extra.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/choice_of_university.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -79,7 +85,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="main" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration name="main" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="Alice_career_guidance" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -92,27 +98,6 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/main.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="test1" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <module name="Alice_career_guidance" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/test1.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -142,12 +127,33 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="test3" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="Alice_career_guidance" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/test3.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.test1" />
-        <item itemvalue="Python.career_guidance_test" />
         <item itemvalue="Python.main" />
-        <item itemvalue="Python.extra" />
+        <item itemvalue="Python.choice_of_university" />
+        <item itemvalue="Python.test3" />
+        <item itemvalue="Python.career_guidance_test" />
         <item itemvalue="Python.test2" />
       </list>
     </recent_temporary>
@@ -229,59 +235,65 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <MESSAGE value="added:&#10;-greeting" />
     <MESSAGE value="added:&#10;-greeting&#10;-choice" />
     <MESSAGE value="added:&#10;-greeting&#10;-choice&#10;-ways" />
     <option name="LAST_COMMIT_MESSAGE" value="added:&#10;-greeting&#10;-choice&#10;-ways" />
   </component>
   <component name="WindowStateProjectService">
+    <state x="1018" y="474" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1582518412862">
+      <screen x="0" y="0" width="2560" height="1440" />
+    </state>
+    <state x="1018" y="474" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.2560.1440@0.0.2560.1440" timestamp="1582518412862" />
     <state x="925" y="272" key="CommitChangelistDialog2" timestamp="1581225820929">
       <screen x="0" y="23" width="2560" height="1330" />
     </state>
     <state x="925" y="272" key="CommitChangelistDialog2/0.23.2560.1330@0.23.2560.1330" timestamp="1581225820929" />
-    <state width="2539" height="422" key="GridCell.Tab.0.bottom" timestamp="1582509641394">
+    <state width="2539" height="422" key="GridCell.Tab.0.bottom" timestamp="1582536732486">
       <screen x="0" y="0" width="2560" height="1440" />
     </state>
-    <state width="2539" height="422" key="GridCell.Tab.0.bottom/0.0.2560.1440@0.0.2560.1440" timestamp="1582509641394" />
+    <state width="2539" height="422" key="GridCell.Tab.0.bottom/0.0.2560.1440@0.0.2560.1440" timestamp="1582536732486" />
     <state width="2539" height="379" key="GridCell.Tab.0.bottom/0.23.2560.1330@0.23.2560.1330" timestamp="1581516497193" />
-    <state width="2539" height="422" key="GridCell.Tab.0.center" timestamp="1582509641393">
+    <state width="2539" height="422" key="GridCell.Tab.0.center" timestamp="1582536732485">
       <screen x="0" y="0" width="2560" height="1440" />
     </state>
-    <state width="2539" height="422" key="GridCell.Tab.0.center/0.0.2560.1440@0.0.2560.1440" timestamp="1582509641393" />
+    <state width="2539" height="422" key="GridCell.Tab.0.center/0.0.2560.1440@0.0.2560.1440" timestamp="1582536732485" />
     <state width="2539" height="379" key="GridCell.Tab.0.center/0.23.2560.1330@0.23.2560.1330" timestamp="1581516497193" />
-    <state width="2539" height="422" key="GridCell.Tab.0.left" timestamp="1582509641393">
+    <state width="2539" height="422" key="GridCell.Tab.0.left" timestamp="1582536732484">
       <screen x="0" y="0" width="2560" height="1440" />
     </state>
-    <state width="2539" height="422" key="GridCell.Tab.0.left/0.0.2560.1440@0.0.2560.1440" timestamp="1582509641393" />
+    <state width="2539" height="422" key="GridCell.Tab.0.left/0.0.2560.1440@0.0.2560.1440" timestamp="1582536732484" />
     <state width="2539" height="379" key="GridCell.Tab.0.left/0.23.2560.1330@0.23.2560.1330" timestamp="1581516497192" />
-    <state width="2539" height="422" key="GridCell.Tab.0.right" timestamp="1582509641394">
+    <state width="2539" height="422" key="GridCell.Tab.0.right" timestamp="1582536732485">
       <screen x="0" y="0" width="2560" height="1440" />
     </state>
-    <state width="2539" height="422" key="GridCell.Tab.0.right/0.0.2560.1440@0.0.2560.1440" timestamp="1582509641394" />
+    <state width="2539" height="422" key="GridCell.Tab.0.right/0.0.2560.1440@0.0.2560.1440" timestamp="1582536732485" />
     <state width="2539" height="379" key="GridCell.Tab.0.right/0.23.2560.1330@0.23.2560.1330" timestamp="1581516497193" />
-    <state width="2539" height="519" key="GridCell.Tab.1.bottom" timestamp="1582498866215">
+    <state width="2539" height="519" key="GridCell.Tab.1.bottom" timestamp="1582535706553">
       <screen x="0" y="0" width="2560" height="1440" />
     </state>
-    <state width="2539" height="519" key="GridCell.Tab.1.bottom/0.0.2560.1440@0.0.2560.1440" timestamp="1582498866215" />
-    <state width="2539" height="519" key="GridCell.Tab.1.bottom/0.23.2560.1330@0.23.2560.1330" timestamp="1582498684768" />
-    <state width="2539" height="519" key="GridCell.Tab.1.center" timestamp="1582498866214">
+    <state width="2539" height="519" key="GridCell.Tab.1.bottom/0.0.2560.1440@0.0.2560.1440" timestamp="1582535706553" />
+    <state width="2539" height="519" key="GridCell.Tab.1.bottom/0.23.2560.1330@0.23.2560.1330" timestamp="1582535639312" />
+    <state width="2539" height="519" key="GridCell.Tab.1.center" timestamp="1582535706552">
       <screen x="0" y="0" width="2560" height="1440" />
     </state>
-    <state width="2539" height="519" key="GridCell.Tab.1.center/0.0.2560.1440@0.0.2560.1440" timestamp="1582498866214" />
-    <state width="2539" height="519" key="GridCell.Tab.1.center/0.23.2560.1330@0.23.2560.1330" timestamp="1582498684767" />
-    <state width="2539" height="519" key="GridCell.Tab.1.left" timestamp="1582498866214">
+    <state width="2539" height="519" key="GridCell.Tab.1.center/0.0.2560.1440@0.0.2560.1440" timestamp="1582535706552" />
+    <state width="2539" height="519" key="GridCell.Tab.1.center/0.23.2560.1330@0.23.2560.1330" timestamp="1582535639311" />
+    <state width="2539" height="519" key="GridCell.Tab.1.left" timestamp="1582535706552">
       <screen x="0" y="0" width="2560" height="1440" />
     </state>
-    <state width="2539" height="519" key="GridCell.Tab.1.left/0.0.2560.1440@0.0.2560.1440" timestamp="1582498866214" />
-    <state width="2539" height="519" key="GridCell.Tab.1.left/0.23.2560.1330@0.23.2560.1330" timestamp="1582498684767" />
-    <state width="2539" height="519" key="GridCell.Tab.1.right" timestamp="1582498866215">
+    <state width="2539" height="519" key="GridCell.Tab.1.left/0.0.2560.1440@0.0.2560.1440" timestamp="1582535706552" />
+    <state width="2539" height="519" key="GridCell.Tab.1.left/0.23.2560.1330@0.23.2560.1330" timestamp="1582535639310" />
+    <state width="2539" height="519" key="GridCell.Tab.1.right" timestamp="1582535706553">
       <screen x="0" y="0" width="2560" height="1440" />
     </state>
-    <state width="2539" height="519" key="GridCell.Tab.1.right/0.0.2560.1440@0.0.2560.1440" timestamp="1582498866215" />
-    <state width="2539" height="519" key="GridCell.Tab.1.right/0.23.2560.1330@0.23.2560.1330" timestamp="1582498684768" />
-    <state x="789" y="327" key="SettingsEditor" timestamp="1581193246219">
-      <screen x="0" y="23" width="2560" height="1330" />
+    <state width="2539" height="519" key="GridCell.Tab.1.right/0.0.2560.1440@0.0.2560.1440" timestamp="1582535706553" />
+    <state width="2539" height="519" key="GridCell.Tab.1.right/0.23.2560.1330@0.23.2560.1330" timestamp="1582535639311" />
+    <state x="789" y="329" key="SettingsEditor" timestamp="1582511892136">
+      <screen x="0" y="0" width="2560" height="1440" />
     </state>
+    <state x="789" y="329" key="SettingsEditor/0.0.2560.1440@0.0.2560.1440" timestamp="1582511892136" />
     <state x="789" y="327" key="SettingsEditor/0.23.2560.1330@0.23.2560.1330" timestamp="1581193246219" />
     <state width="500" height="445" key="SwitcherDM" timestamp="1581194741986">
       <screen x="0" y="23" width="2560" height="1330" />

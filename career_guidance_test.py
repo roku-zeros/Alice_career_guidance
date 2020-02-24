@@ -2,8 +2,9 @@ from flask import Flask, request
 from extra import *
 import json
 import Levenshtein as lv
+from pony.orm import *
+from SQmodel import *
 
-READY = "ready"
 
 main_questions = {1: ["Ухаживать за животными",
                       "Обслуживать машины, приборы (следить, регулировать)"],
@@ -44,12 +45,20 @@ main_questions = {1: ["Ухаживать за животными",
              19: ["Изготовлять по чертежам детали, изделия (машины, одежду), строить здания",
                   "Заниматься черчением, копировать чертежи, карты"],
              20: ["Вести борьбу с болезнями растений, с вредителями леса, сада",
-                  "Работать на клавишных машинах (пишущей машинке, телетайпе, наборной машине и др.)"]
+                  "Работать на клавишных машинах (пишущей машинке, телетайпе, наборной машине и др.)"],
              21: """Выбери числа от 1 до 3, соответствующие подходящим классам профессий:
              1) Гностический - направлен на сортировку, сравнивание, проверку и оценивание. Примеры: биолог-лаборант, корректор, социолог.
              2) Преобразовательный  - направлен на преоброзование энергии, информации, предметы, процессы. Примеры: расстенивод, учитель, бухгалтер.
-             3) Изыскательские - напрвлен на создание чего-либо нового. Примеры: программист, инженер, биолог-исследователь, дизайнер."""
+             3) Изыскательские - напрвлен на создание чего-либо нового. Примеры: программист, инженер, биолог-исследователь, дизайнер.""",
+             22: ''
              }
+
+professions_connections = {1: "растениеводством, охраной окружающей среды",
+                           2: "техникой",
+                           3: "обслуживанием людей",
+                           4: "подсчетами, цифровыми и буквенными знаками",
+                           5: "творчеством"
+                           }
 
 extra_questions = {}  ############
 
@@ -62,26 +71,33 @@ HUMAN_TYPES = [HUMAN_NATURE, HUMAN_TECHNIC, HUMAN_HUMAN, HUMAN_SIGN_SYSTEM, HUMA
 
 users_careers = {}  # information about users and theirs career
 
+db.bind(provider='sqlite', filename='Professions.db')
+db.generate_mapping()
+
 
 def career_guidance_test(req, res, user):
     if user in users_careers:  # ask new question
         users_question = users_careers[user][0]
-        if not add_choice(req, res, user, users_question) and users_question <= 20:  # adding users choice
-            res['response']['text'] = "Отвечать нужно один или два!"
-            return res
+        print(users_question)
         if users_question <= 20:
+            if not add_choice(req, res, user, users_question) and users_question <= 20:  # adding users choice
+                res['response']['text'] = "Отвечать нужно один или два!"
+                return res
             users_question = users_careers[user][0]
             res['response']['text'] = (main_questions[users_question][0] + ' или ' + main_questions[users_question][1] + '?')
             users_careers[user][0] += 1
+            print(users_question)
         elif users_question == 21:
-            add_last_choice()
-        else:  # generate tests result
-            test_result(req, res, user)
+            res['response']['text'] = main_questions[21]
+            users_careers[user][0] += 1
+        elif users_question == 22:
+            add_last_choice(req, res, user)
         return res
     else:
         res['response']['text'] = "Чтобы пройти тест, нужно будет выбирать между первой и второй работой, отвечая один или два соответсвенно." \
                                   "Ухаживать за животными или Обслуживать машины, приборы (следить, регулировать)"
         users_careers[user] = [2, [0, 0, 0, 0, 0], '']  # question, points, profession target
+    return res
 
 
 def add_choice(req, res, user, question):
@@ -91,7 +107,7 @@ def add_choice(req, res, user, question):
     elif text.lower() == 'два' or text == '2':
         choice = main_questions[question][0]
     else:
-        res['response']['text'] = "Отвечать нужно один или два!"
+        res['response']['text'] = "Отвечать нужно один или два, или три!"
         return False
     for type in range(len(HUMAN_TYPES)):
         if choice in HUMAN_TYPES[type]:
@@ -112,9 +128,31 @@ def add_last_choice(req, res, user):
     if not choices:
         res['response']['text'] = "Отвечать нужно один или два, или три!"
         return False
-    users_careers[user][3] = choices
-    return True
+    users_careers[user][2] = choices
+    test_result(req, res, user)
 
 
-def test_result(res, req, user):
-    pass
+def test_result(req, res, user):
+    result = []
+    maxx = 0
+    for n in range(5):
+        similarity = users_careers[user][1][n] / 8 * 100
+        if similarity >= maxx:
+            result.append(n + 1)
+            maxx = similarity
+    print(users_careers[user][2], result)
+    answer = "Тебе подходят профессии связанные с "
+    answer += ', '.join([professions_connections[i] for i in result])
+    answer += '.' + '\n' + 'Примеры: '
+    examples = []
+    with db_session:
+        for prof in select(p for p in Profession):
+            print(prof.profession_target.id)
+            print(users_careers[user][2])
+            print(prof.human_type.id)
+            print(result)
+            if prof.profession_target.id in users_careers[user][2] and prof.human_type.id in result:
+                examples.append(prof.name)
+    answer += ', '.join(examples) + '.'
+    res['response']['text'] = answer
+    return res
