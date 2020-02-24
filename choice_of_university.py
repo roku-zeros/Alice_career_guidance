@@ -62,4 +62,5 @@ def choice_of_university(req, res, user):
         result += "&fvuz_exam=0"
         res['response']['text'] = result + "\n" + "По этой ссылке просмотреть подходящие программы бакалавриата."
         active_users.discard(user)
+        session[user] = MAKING_CHOICE
         return res

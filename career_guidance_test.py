@@ -155,4 +155,5 @@ def test_result(req, res, user):
                 examples.append(prof.name)
     answer += ', '.join(examples) + '.'
     res['response']['text'] = answer
+    session[user] = MAKING_CHOICE
     return res

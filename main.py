@@ -25,6 +25,8 @@ def main():
     }
     text = request.json['request']['original_utterance']
     user_id = request.json['session']['user_id']  # get user id
+    if not request.json['response']['end_session']:
+        del session[user_id]
     if user_id not in session:  # if it's new user
         greeting(response, user_id)
     elif session[user_id] == 'start':
