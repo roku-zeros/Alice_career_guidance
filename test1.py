@@ -1,11 +1,22 @@
-n = int(input())
-t = int(input())
-s = 0
-r = t
+from ProfessionModel import *
+import requests
+import bs4
+from extra import *
+import Levenshtein as lv
 
-for _ in range(n):
-    a, b = map(int, input().split())
-    s += a
-    r = min(s + t, r + b)
 
-print(r)
+def get_prof_information(link):
+    url = requests.get(link)
+
+    b = bs4.BeautifulSoup(url.text, "html.parser")
+
+    url1 = b.select('article')
+    information = url1[0].getText()
+    university = ' '.join(information.split())
+    university = university.split('программы')
+    university = [t.rsplit('Бюдж')[0].rsplit('Начало')[0].rsplit('Прох')[0] for t in university if len(t) > 6 and 'в России' not in t
+                  and 'профессии' not in t][1:]
+    print('\n-------------'.join(university))
+
+
+print(get_prof_information('https://www.ucheba.ru/prof/204'))

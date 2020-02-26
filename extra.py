@@ -1,10 +1,10 @@
-import Levenshtein as lv
 import pymorphy2
 
 morph = pymorphy2.MorphAnalyzer()
 
 
 MAKING_CHOICE, CAREER, PROFESSION, UNIVERSITY, IN_BRENCH = "making choice", "профиль", "профессия", "вуз", "занят"
+AFTER_TEST = "after test"
 
 
 def clean_sentence(text, part_of_speech):  # clean sentence from unnecessary words

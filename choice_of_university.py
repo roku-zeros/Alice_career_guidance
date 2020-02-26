@@ -1,4 +1,3 @@
-from main import session
 from extra import *
 import Levenshtein as lv
 
@@ -21,11 +20,11 @@ sub_num = {"биология": 3,
 active_users = set()
 
 
-def choice_of_university(req, res, user):
+def university_choice(req, res, user):
     if user not in active_users:
         res['response']['text'] = "Какие предметы ты садешь на егэ и какой суммарный балл ты хочешь получить?"
         active_users.add(user)
-        return res
+        return res, UNIVERSITY
     else:
         text = req.json['request']['original_utterance'].split(' ')
         exams = text[:-1]
@@ -33,7 +32,7 @@ def choice_of_university(req, res, user):
         confirmed = []
         if not points.isdigit():
             res['response']['text'] = "В конце должен быть назван препдоложительный суммарный балл!"
-            return res
+            return res, UNIVERSITY
         else:
             points = int(points)
         for subject in exams:
@@ -43,16 +42,14 @@ def choice_of_university(req, res, user):
             else:
                 maxx = (0, '')
                 for s in subjects:
-                    difference = lv.ratio(subjects, s)
+                    difference = lv.ratio(subject, s)
                     if difference >= 0.5 and difference > maxx[0]:
-                        maxx = (s, difference)
+                        maxx = (difference, s)
                 if maxx[0] > 0:
                     confirmed.append(maxx[1])
         if len(confirmed) < 3:
             res['response']['text'] = "Мало экзаменов или часть введенных не существует"
-            return res
-        print(confirmed)
-        print([str(sub_num[subject]) for subject in confirmed])
+            return res, UNIVERSITY
         confirmed = set([str(sub_num[subject]) for subject in confirmed])
         result = "https://postupi.online/test/kalkulator-ege/result/?exams="
         result += ';'.join(confirmed)
@@ -60,7 +57,9 @@ def choice_of_university(req, res, user):
         mid_points = points // len(confirmed)
         result += ';'.join([str(mid_points) for _ in range(len(confirmed))])
         result += "&fvuz_exam=0"
-        res['response']['text'] = result + "\n" + "По этой ссылке просмотреть подходящие программы бакалавриата."
+        res['response']['text'] = result + "\n" + \
+                                  "По этой ссылке можно просмотреть подходящие программы бакалавриата." + "\n" + \
+                                  "Хочешь узнать еще что-то?"
         active_users.discard(user)
-        session[user] = MAKING_CHOICE
-        return res
+        status = AFTER_TEST
+        return res, status

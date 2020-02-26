@@ -21,4 +21,4 @@ def get_prof_information(link):
     return about.replace('\n', '').replace('\xa0', ''), company, university
 
 
-print(get_prof_information('https://www.ucheba.ru/prof/1577'))  # программаМосковский
+print(get_prof_information('https://www.ucheba.ru/prof/954'))  # программаМосковский

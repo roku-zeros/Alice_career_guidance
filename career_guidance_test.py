@@ -1,5 +1,6 @@
 from extra import *
 from SQmodel import *
+import Levenshtein as lv
 
 
 main_questions = {1: ["Ухаживать за животными",
@@ -42,11 +43,9 @@ main_questions = {1: ["Ухаживать за животными",
                   "Заниматься черчением, копировать чертежи, карты"],
              20: ["Вести борьбу с болезнями растений, с вредителями леса, сада",
                   "Работать на клавишных машинах (пишущей машинке, телетайпе, наборной машине и др.)"],
-             21: """Выбери числа от 1 до 3, соответствующие подходящим классам профессий:
-             1) Гностический - направлен на сортировку, сравнивание, проверку и оценивание. Примеры: биолог-лаборант, корректор, социолог.
-             2) Преобразовательный  - направлен на преоброзование энергии, информации, предметы, процессы. Примеры: расстенивод, учитель, бухгалтер.
-             3) Изыскательские - напрвлен на создание чего-либо нового. Примеры: программист, инженер, биолог-исследователь, дизайнер.""",
-             22: ''
+             21: "1) Гностический - направлен на сортировку, сравнивание, проверку и оценивание. Примеры: биолог-лаборант, корректор, социолог." + '\n'
+             "2) Преобразовательный  - направлен на преоброзование энергии, информации, предметы, процессы. Примеры: расстенивод, учитель, бухгалтер." + '\n'
+             "3) Изыскательские - напрвлен на создание чего-либо нового. Примеры: программист, инженер, биолог-исследователь, дизайнер."
              }
 
 professions_connections = {1: "растениеводством, охраной окружающей среды",
@@ -56,7 +55,6 @@ professions_connections = {1: "растениеводством, охраной 
                            5: "творчеством"
                            }
 
-extra_questions = {}  ############
 
 HUMAN_NATURE = [main_questions[1][0], main_questions[3][1], main_questions[6][0], main_questions[10][0], main_questions[11][0], main_questions[13][1], main_questions[16][0], main_questions[20][0]]
 HUMAN_TECHNIC = [main_questions[1][1], main_questions[4][0], main_questions[7][1], main_questions[9][0], main_questions[11][1], main_questions[14][0], main_questions[17][1], main_questions[19][0]]
@@ -74,33 +72,32 @@ db.generate_mapping()
 def career_guidance_test(req, res, user):
     if user in users_careers:  # ask new question
         users_question = users_careers[user][0]
-        print(users_question)
         if users_question <= 20:
             if not add_choice(req, res, user, users_question) and users_question <= 20:  # adding users choice
                 res['response']['text'] = "Отвечать нужно один или два!"
-                return res
+                return res, CAREER
             users_question = users_careers[user][0]
-            res['response']['text'] = (main_questions[users_question][0] + ' или ' + main_questions[users_question][1] + '?')
+            res['response']['text'] = "1)" + main_questions[users_question][0] + "\n2)" + main_questions[users_question][1]
             users_careers[user][0] += 1
-            print(users_question)
         elif users_question == 21:
             res['response']['text'] = main_questions[21]
             users_careers[user][0] += 1
         elif users_question == 22:
-            add_last_choice(req, res, user)
-        return res
+            return add_last_choice(req, res, user)
+        return res, CAREER
     else:
-        res['response']['text'] = "Чтобы пройти тест, нужно будет выбирать между первой и второй работой, отвечая один или два соответсвенно." \
-                                  "Ухаживать за животными или Обслуживать машины, приборы (следить, регулировать)"
+        res['response']['text'] = "Чтобы пройти тест, нужно будет выбирать номера утверждений, которые больше подходят вам." + "\n" +\
+                                  "1)Ухаживать за животными" + "\n" + \
+                                  "2)Обслуживать машины, приборы (следить, регулировать)"
         users_careers[user] = [2, [0, 0, 0, 0, 0], '']  # question, points, profession target
     return res
 
 
 def add_choice(req, res, user, question):
     text = req.json['request']['original_utterance']
-    if text.lower() == 'один' or text == '1':
+    if text.lower() == 'один' or text == '1' or 'перв' in text:
         choice = main_questions[question][0]
-    elif text.lower() == 'два' or text == '2':
+    elif text.lower() == 'два' or text == '2' or 'вто' in text:
         choice = main_questions[question][0]
     else:
         res['response']['text'] = "Отвечать нужно один или два, или три!"
@@ -115,17 +112,17 @@ def add_last_choice(req, res, user):
     text = req.json['request']['original_utterance']
     choices = []
     for word in text.split():
-        if text.lower() == 'один' or text == '1':
+        if text.lower() == 'один' or text == '1' or 'перв' in text:
             choices.append(1)
-        elif text.lower() == 'два' or text == '2':
+        elif text.lower() == 'два' or text == '2' or 'вто' in text:
             choices.append(2)
-        elif text.lower() == 'три' or text == '3':
+        elif text.lower() == 'три' or text == '3' or 'тре' in text:
             choices.append(3)
     if not choices:
         res['response']['text'] = "Отвечать нужно один или два, или три!"
         return False
     users_careers[user][2] = choices
-    test_result(req, res, user)
+    return test_result(req, res, user)
 
 
 def test_result(req, res, user):
@@ -136,20 +133,17 @@ def test_result(req, res, user):
         if similarity >= maxx:
             result.append(n + 1)
             maxx = similarity
-    print(users_careers[user][2], result)
     answer = "Тебе подходят профессии связанные с "
     answer += ', '.join([professions_connections[i] for i in result])
     answer += '.' + '\n' + 'Примеры: '
     examples = []
     with db_session:
         for prof in select(p for p in Profession):
-            print(prof.profession_target.id)
-            print(users_careers[user][2])
-            print(prof.human_type.id)
-            print(result)
             if prof.profession_target.id in users_careers[user][2] and prof.human_type.id in result:
                 examples.append(prof.name)
     answer += ', '.join(examples) + '.'
-    res['response']['text'] = answer
-    session[user] = MAKING_CHOICE
-    return res
+    res['response']['text'] = answer + "\n" + "Хочешь узнать еще что-то?"
+    del users_careers[user]
+    status = AFTER_TEST
+    print(res, status)
+    return res, status
