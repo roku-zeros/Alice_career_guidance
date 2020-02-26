@@ -1,5 +1,8 @@
 from flask import Flask, request
 import json
+import Levenshtein as lv
+import pymorphy2
+from extra import *
 from career_guidance_test import *
 from choice_of_university import *
 
@@ -22,8 +25,6 @@ def main():
     }
     text = request.json['request']['original_utterance']
     user_id = request.json['session']['user_id']  # get user id
-    if not request.json['response']['end_session']:
-        del session[user_id]
     if user_id not in session:  # if it's new user
         greeting(response, user_id)
     elif session[user_id] == 'start':
