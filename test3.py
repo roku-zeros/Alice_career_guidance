@@ -21,4 +21,19 @@ def get_prof_information(link):
     return about.replace('\n', '').replace('\xa0', ''), company, university
 
 
-print(get_prof_information('https://www.ucheba.ru/prof/954'))  # программаМосковский
+import csv
+
+FILENAME = "prof.csv"
+
+users_prof = input()
+
+with open(FILENAME, "a", newline="") as file:
+    print(users_prof)
+    writer = csv.writer(file)
+    writer.writerow(users_prof)
+
+with open(FILENAME, "r", newline="") as file:
+    reader = csv.DictReader(file)
+    for row in reader:
+        print(row)
+

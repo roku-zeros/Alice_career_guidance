@@ -3,11 +3,15 @@ import requests
 import bs4
 from extra import *
 import Levenshtein as lv
+import csv
 
 db.bind(provider='sqlite', filename='professions_information.db')
 db.generate_mapping()
 
 active_users = set()
+
+
+FILENAME = "prof.csv"
 
 
 def profession_choice(req, res, user):
@@ -25,6 +29,9 @@ def profession_choice(req, res, user):
                     max_similarity = [similarity, prof.name, prof.number]
             if max_similarity[0] < 0.45:
                 res['response']['text'] = "Я пока не знаю этой профессии, она скоро бует добавлена. Попробуйте назвать другую."
+                with open(FILENAME, "a", newline="") as file:
+                    writer = csv.writer(file)
+                    writer.writerow(users_prof)
                 return res
             choosen_prof = max_similarity[1], max_similarity[2]
             link = "https://www.ucheba.ru/prof/" + choosen_prof[1]

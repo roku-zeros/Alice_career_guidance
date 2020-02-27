@@ -28,7 +28,7 @@ def main():
     if user_id not in session:  # if it's new user
         greeting(response, user_id)
     elif session[user_id] == 'start':
-        if text.lower() == 'да':
+        if text.lower() == 'да' or text.lower() == 'хочу':
             start(response, user_id)
         elif text.lower() == 'нет':
             response['response']['text'] = "До новых встреч"
