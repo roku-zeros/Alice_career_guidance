@@ -93,9 +93,3 @@ def making_choice(req, res, user):
 
     else:
         repeat(res)
-
-
-if __name__ == '__main__':
-    print('START')
-    app.run(host='0.0.0.0', port=5000)
-

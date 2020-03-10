@@ -22,7 +22,7 @@ active_users = set()
 
 def university_choice(req, res, user):
     if user not in active_users:
-        res['response']['text'] = "Какие предметы ты садешь на егэ и какой суммарный балл ты хочешь получить?"
+        res['response']['text'] = "Какие предметы ты сдаешь на ЕГЭ и какой суммарный балл ты хочешь получить?"
         active_users.add(user)
         return res, UNIVERSITY
     else:

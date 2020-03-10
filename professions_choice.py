@@ -66,4 +66,4 @@ def get_prof_information(link):
     university = university.split('программы')
     university = [t.rsplit('Бюдж')[0].rsplit('Начало')[0].rsplit('Прох')[0] for t in university if
                   len(t) > 6 and 'в России' not in t and 'профессии' not in t][1:]
-    return about.replace('\n', '').replace('\xa0', ''), company, ','.join(university)
+    return about.replace('\n', '').replace('\xa0', ' '), company, ','.join(university)
